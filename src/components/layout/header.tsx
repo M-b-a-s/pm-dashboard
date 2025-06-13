@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input"
+import { ModeToggle } from "./mode-toggle"
 
 export function Header() {
   return (
@@ -8,7 +9,8 @@ export function Header() {
         <Input type="search" placeholder="Search..." className="w-full" />
       </div>
       {/* User profile image */}
-      <div className="ml-4 flex items-center">
+      <div className="ml-4 flex items-center gap-4 ">
+        <ModeToggle />  
         <img
           src="/profile-placeholder.png"
           alt="User profile"
