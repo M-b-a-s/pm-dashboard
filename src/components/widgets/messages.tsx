@@ -24,7 +24,7 @@ const mockMessages: Message[] = [
 
 export function MessagesWidget() {
   return (
-    <Card className="w-full max-w-md flex flex-col"> {/* Ensures same width as CalendarWidget */}
+    <Card className="w-full max-w-[250px] flex flex-col"> {/* Matches shadcn Calendar width */}
       <CardHeader>
         <CardTitle className="text-sm font-semibold">Messages</CardTitle>
       </CardHeader>

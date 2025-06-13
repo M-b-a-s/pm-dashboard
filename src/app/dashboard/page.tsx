@@ -8,7 +8,7 @@ export default function DashboardPage() {
   return (
     <main className="w-full h-full min-h-screen overflow-hidden">
       <Header />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full w-full items-stretch pt-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full w-full items-stretch pt-4">
         <div className="col-span-1 space-y-4 h-full flex flex-col">
           <ProjectCard
             title="Redesign Landing Page"
@@ -27,7 +27,7 @@ export default function DashboardPage() {
             team={[{ name: "Bola", avatarUrl: "" }, { name: "Ife" }]}
           />
         </div>
-        <div className="h-full flex flex-col">
+        <div className="col-span-2 h-full flex flex-col">
           <TaskList />
         </div>
         <div className="col-span-1 space-y-4 h-full flex flex-col">
