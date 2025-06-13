@@ -24,11 +24,11 @@ const mockMessages: Message[] = [
 
 export function MessagesWidget() {
   return (
-    <Card>
+    <Card className="w-full max-w-md flex flex-col"> {/* Ensures same width as CalendarWidget */}
       <CardHeader>
         <CardTitle className="text-sm font-semibold">Messages</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-1 overflow-auto">
         {mockMessages.map((msg) => (
           <div key={msg.id} className="flex gap-3 items-start">
             <Avatar className="w-8 h-8">
