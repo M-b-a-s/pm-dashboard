@@ -16,11 +16,11 @@ const navItems = [
 
 export function Sidebar() {
   return (
-    <aside className="w-[240px] h-screen border-r bg-white p-4 flex flex-col gap-4">
+    <aside className="w-[240px] h-screen border-r bg-white p-4 pr-0 flex flex-col gap-4">
       <div className="font-bold text-xl mb-6">Dashboard</div>
       <nav className="space-y-2">
         {navItems.map((item) => (
-          <Link key={item.href} href={item.href} className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition">
+          <Link key={item.href} href={item.href} className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition p-2 hover:bg-muted border-r-4 border-transparent hover:border-primary">
             <item.icon className="w-5 h-5" />
             {item.label}
           </Link>

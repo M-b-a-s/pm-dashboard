@@ -8,7 +8,7 @@ export default function DashboardPage() {
   return (
     <main className="w-full h-full min-h-screen overflow-hidden">
       <Header />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full w-full items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full w-full items-stretch pt-4">
         <div className="col-span-1 space-y-4 h-full flex flex-col">
           <ProjectCard
             title="Redesign Landing Page"
@@ -30,11 +30,11 @@ export default function DashboardPage() {
         <div className="h-full flex flex-col">
           <TaskList />
         </div>
-        <div className="col-span-1 h-full flex flex-col gap-4">
-          <div className="flex-1 min-h-0">
+        <div className="col-span-1 space-y-4 h-full flex flex-col">
+          <div className="">
             <CalendarWidget />
           </div>
-          <div className="flex-1 min-h-0 overflow-auto">
+          <div className="">
             <MessagesWidget />
           </div>
         </div>
