@@ -1,4 +1,5 @@
 import { ProjectCard } from "@/components/cards/project-card";
+import { TaskList } from "@/components/tasks/task-list";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarWidget } from "@/components/widgets/calendar";
@@ -10,7 +11,11 @@ export default function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle>
-            <div className="col-span-1 space-y-4">
+            🗂️ Projects
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="col-span-1 space-y-4">
               <ProjectCard
                 title="Redesign Landing Page"
                 client="Slack"
@@ -28,26 +33,25 @@ export default function DashboardPage() {
                 team={[{ name: "Bola", avatarUrl: "" }, { name: "Ife" }]}
               />
             </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>{/* Project cards content */}</CardContent>
+        </CardContent>
       </Card>
       <Card>
         <CardHeader>
           <CardTitle>📋 My Tasks</CardTitle>
         </CardHeader>
-        <CardContent>{/* My tasks content */}</CardContent>
+        <CardContent>
+          <TaskList />
+        </CardContent>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>
-            <div className="col-span-1 space-y-4">
-              <CalendarWidget />
-              <MessagesWidget />
-            </div>
+          <CardTitle>📅 Calendar & Messages            
           </CardTitle>
         </CardHeader>
-        <CardContent>{/* Calendar and messages content */}</CardContent>
+        <CardContent><div className="col-span-1 space-y-4">
+              <CalendarWidget />
+              <MessagesWidget />
+            </div></CardContent>
       </Card>
     </div>
   );
