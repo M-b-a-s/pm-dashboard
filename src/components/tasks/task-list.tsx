@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
+import { supabase } from "@/lib/supabase/client"
 
 type Task = {
   id: string
@@ -12,21 +13,38 @@ type Task = {
   project?: string
 }
 
-const mockTasks: Task[] = [
-  { id: "1", title: "Send invoice to Figma", completed: false, project: "New UI" },
-  { id: "2", title: "Fix mobile nav bug", completed: true, project: "Landing Page" },
-  { id: "3", title: "Client feedback call", completed: false },
-]
-
 export function TaskList() {
-  const [tasks, setTasks] = useState(mockTasks)
+  const [tasks, setTasks] = useState<Task[]>([])
 
-  const toggleTask = (id: string) => {
-    setTasks(prev =>
-      prev.map(task =>
-        task.id === id ? { ...task, completed: !task.completed } : task
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const { data, error } = await supabase
+        .from("tasks")
+        .select("*")
+        .order("created_at", { ascending: false })
+      if (error) {
+        console.error("Error fetching tasks:", error.message)
+      } else {
+        setTasks(data)
+      }
+    }
+
+    fetchTasks()
+  }, [])
+
+  const toggleTask = async (id: string, completed: boolean) => {
+    const { error } = await supabase
+      .from("tasks")
+      .update({ completed: !completed })
+      .eq("id", id)
+
+    if (!error) {
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === id ? { ...task, completed: !task.completed } : task
+        )
       )
-    )
+    }
   }
 
   return (
@@ -58,7 +76,7 @@ export function TaskList() {
             </div>
             <Checkbox
               checked={task.completed}
-              onCheckedChange={() => toggleTask(task.id)}
+              onCheckedChange={() => toggleTask(task.id, task.completed)}
               className="ml-2 mt-1"
             />
           </div>
