@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useData } from "./useData"
 import { supabase } from "@/lib/supabase/client"
 
 export type Task = {
@@ -9,23 +9,7 @@ export type Task = {
 }
 
 export function useTasks() {
-  const [tasks, setTasks] = useState<Task[]>([])
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const { data, error } = await supabase
-        .from("tasks")
-        .select("*")
-        .order("created_at", { ascending: false })
-      if (error) {
-        console.error("Error fetching tasks:", error.message)
-      } else {
-        setTasks(data)
-      }
-    }
-
-    fetchTasks()
-  }, [])
+  const { data: tasks, loading, error, setData } = useData<Task>("tasks", { orderBy: "created_at", ascending: false })
 
   const toggleTask = async (id: string, completed: boolean) => {
     const { error } = await supabase
@@ -34,7 +18,7 @@ export function useTasks() {
       .eq("id", id)
 
     if (!error) {
-      setTasks((prev) =>
+      setData((prev: Task[]) =>
         prev.map((task) =>
           task.id === id ? { ...task, completed: !task.completed } : task
         )
@@ -42,5 +26,5 @@ export function useTasks() {
     }
   }
 
-  return { tasks, toggleTask }
+  return { tasks, loading, error, toggleTask }
 }
