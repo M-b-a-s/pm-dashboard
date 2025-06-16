@@ -30,6 +30,34 @@ export function useTasks() {
 
   useEffect(() => {
     fetchTasks()
+    // Real-time sync
+    const channel = supabase
+      .channel("tasks-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "tasks" },
+        (payload) => {
+          setTasks((prev) => {
+            if (payload.eventType === "INSERT" && payload.new) {
+              return [payload.new as Task, ...prev]
+            }
+            if (payload.eventType === "UPDATE" && payload.new) {
+              return prev.map((task) =>
+                task.id === (payload.new as Task).id ? (payload.new as Task) : task
+              )
+            }
+            if (payload.eventType === "DELETE" && payload.old) {
+              return prev.filter((task) => task.id !== (payload.old as Task).id)
+            }
+            return prev
+          })
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -43,11 +71,6 @@ export function useTasks() {
     if (error) {
       toast.error("Failed to update task: " + error.message)
     } else {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === id ? { ...task, completed: !task.completed } : task
-        )
-      )
       toast.success("Task updated")
     }
   }
