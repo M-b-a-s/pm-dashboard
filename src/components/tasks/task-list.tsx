@@ -1,51 +1,12 @@
 'use client'
 
-import { useEffect, useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
-import { supabase } from "@/lib/supabase/client"
-
-type Task = {
-  id: string
-  title: string
-  completed: boolean
-  project?: string
-}
+import { useTasks } from "@/hooks/useTasks"
 
 export function TaskList() {
-  const [tasks, setTasks] = useState<Task[]>([])
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const { data, error } = await supabase
-        .from("tasks")
-        .select("*")
-        .order("created_at", { ascending: false })
-      if (error) {
-        console.error("Error fetching tasks:", error.message)
-      } else {
-        setTasks(data)
-      }
-    }
-
-    fetchTasks()
-  }, [])
-
-  const toggleTask = async (id: string, completed: boolean) => {
-    const { error } = await supabase
-      .from("tasks")
-      .update({ completed: !completed })
-      .eq("id", id)
-
-    if (!error) {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === id ? { ...task, completed: !task.completed } : task
-        )
-      )
-    }
-  }
+  const { tasks, toggleTask } = useTasks()
 
   return (
     <Card>
