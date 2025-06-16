@@ -8,7 +8,8 @@ import { Plus } from "lucide-react"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useTasks } from "@/hooks/useTasks" // <-- Move logic to a hook for purity
+import { useTasks } from "@/hooks/useTasks"
+import clsx from "clsx"
 
 export function TaskList() {
   const {
@@ -21,7 +22,7 @@ export function TaskList() {
     setNewProject,
     handleCreateTask,
     toggleTask,
-  } = useTasks() // <-- Custom hook handles all logic
+  } = useTasks()
 
   return (
     <Card>
@@ -69,10 +70,18 @@ export function TaskList() {
 
       <CardContent className="space-y-4">
         {tasks.map((task, idx) => (
-          <div key={task.id} className="flex items-start gap-3">
-            <span className="text-xs text-muted-foreground mt-1">{idx + 1}.</span>
+          <div
+            key={task.id}
+            className="flex items-center gap-3 group"
+          >
+            <span className="text-xs text-muted-foreground">{idx + 1}.</span>
             <div className="flex flex-1 items-center gap-2">
-              <span className={task.completed ? "line-through text-muted-foreground" : ""}>
+              <span
+                className={clsx(
+                  "text-sm select-none",
+                  task.completed && "line-through text-muted-foreground"
+                )}
+              >
                 {task.title}
               </span>
               {task.project && (
@@ -84,7 +93,7 @@ export function TaskList() {
             <Checkbox
               checked={task.completed}
               onCheckedChange={() => toggleTask(task.id, task.completed)}
-              className="ml-2 mt-1"
+              className="ml-2 cursor-pointer"
             />
           </div>
         ))}

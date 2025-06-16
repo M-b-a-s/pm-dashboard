@@ -63,6 +63,14 @@ export function useTasks() {
 
   // Toggle task completion
   const toggleTask = async (id: string, completed: boolean) => {
+    // Update local state immediately for responsiveness
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, completed: !completed } : task
+      )
+    )
+
+    // Update in database
     const { error } = await supabase
       .from("tasks")
       .update({ completed: !completed })
@@ -70,8 +78,12 @@ export function useTasks() {
 
     if (error) {
       toast.error("Failed to update task: " + error.message)
-    } else {
-      toast.success("Task updated")
+      // Optionally, revert local state if error
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === id ? { ...task, completed } : task
+        )
+      )
     }
   }
 
