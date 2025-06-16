@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
+import { Plus, Trash2 } from "lucide-react"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -22,6 +22,7 @@ export function TaskList() {
     setNewProject,
     handleCreateTask,
     toggleTask,
+    deleteTask,
   } = useTasks()
 
   return (
@@ -90,6 +91,14 @@ export function TaskList() {
                 </Badge>
               )}
             </div>
+            <button
+              type="button"
+              onClick={() => deleteTask(task.id)}
+              className="text-destructive hover:bg-destructive/10 rounded p-1 transition-colors cursor-pointer"
+              aria-label="Delete task"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
             <Checkbox
               checked={task.completed}
               onCheckedChange={() => toggleTask(task.id, task.completed)}

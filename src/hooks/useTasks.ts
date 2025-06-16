@@ -110,6 +110,17 @@ export function useTasks() {
     }
   }
 
+  // Delete a task
+  const deleteTask = async (id: string) => {
+    const { error } = await supabase.from("tasks").delete().eq("id", id)
+    if (error) {
+      toast.error("Failed to delete task: " + error.message)
+    } else {
+      setTasks((prev) => prev.filter((task) => task.id !== id))
+      toast.success("Task deleted")
+    }
+  }
+
   return {
     tasks,
     open,
@@ -121,5 +132,6 @@ export function useTasks() {
     handleCreateTask,
     toggleTask,
     fetchTasks,
+    deleteTask,
   }
 }
