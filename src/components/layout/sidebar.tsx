@@ -16,7 +16,7 @@ const navItems = [
 
 export function Sidebar() {
   return (
-    <aside className="w-[240px] h-screen border-r bg-white p-4 pr-0 flex flex-col gap-4">
+    <aside className="w-[240px] h-screen border-r bg-background p-4 pr-0 flex flex-col gap-4">
       <div className="font-bold text-xl mb-6">Dashboard</div>
       <nav className="space-y-2">
         {navItems.map((item) => (

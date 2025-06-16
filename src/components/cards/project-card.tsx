@@ -27,7 +27,7 @@ export function ProjectCard({
   }[priority]
 
   return (
-    <div className="bg-white border rounded-2xl shadow-sm p-4 space-y-4">
+    <div className="bg-muted border rounded-2xl shadow-sm p-4 space-y-4">
       <div className="flex justify-between items-start">
         <div className="space-y-1">
           <h3 className="font-semibold text-base">{title}</h3>
