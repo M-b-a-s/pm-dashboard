@@ -20,15 +20,21 @@ const mockMessages: Message[] = [
     from: "Uche",
     content: "Payment has been made, thanks!",
   },
+  {
+    id: "3",
+    from: "Uch",
+    content: "Payment has been made, thanks!",
+  },
+  // Add more messages here to test scrolling
 ]
 
 export function MessagesWidget() {
   return (
-    <Card className="w-full max-w-[250px] flex flex-col"> {/* Matches shadcn Calendar width */}
+    <Card className="w-full max-w-[300px] h-[200px] flex flex-col">
       <CardHeader>
         <CardTitle className="text-sm font-semibold">Messages</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 flex-1 overflow-auto">
+      <CardContent className="flex-1 overflow-y-auto space-y-4">
         {mockMessages.map((msg) => (
           <div key={msg.id} className="flex gap-3 items-start">
             <Avatar className="w-8 h-8">
